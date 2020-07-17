@@ -1,10 +1,25 @@
-﻿namespace MyProject.Core.Entity
+﻿using MyProject.Core.Abstract;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MyProject.Core.Entity
 {
-    public class Product
+    [Table("SHOP.Products")]
+    public class Product : Entity<long>
     {
-        public long Id { get; set; }
         public string Name { get; set; }
-        public string Price { get; set; }
+        public string Code { get; set; }
+        public long CategoryId { get; set; }
+        public string Metatitle { get; set; }
+        public double Price { get; set; }
+        public double PromotionPrice { get; set; }
+        public string Content { get; set; }
         public string Description { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+        public bool Status { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public virtual Category Category { get; set; }
     }
 }

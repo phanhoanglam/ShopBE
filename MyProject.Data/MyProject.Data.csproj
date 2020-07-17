@@ -7,6 +7,14 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200317023830_Initial.cs" />
     <Compile Remove="Migrations\20200317023830_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200317024616_Initial.cs" />
+    <Compile Remove="Migrations\20200317024616_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200717062626_Update_Db.cs" />
+    <Compile Remove="Migrations\20200717062626_Update_Db.Designer.cs" />
+    <Compile Remove="Migrations\20200717062939_Update_Db1.cs" />
+    <Compile Remove="Migrations\20200717062939_Update_Db1.Designer.cs" />
+    <Compile Remove="Migrations\20200717063928_Initial.cs" />
+    <Compile Remove="Migrations\20200717063928_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

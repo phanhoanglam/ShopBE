@@ -15,17 +15,9 @@ namespace MyProject.Application.Services.Product
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Core.Entity.Product> CreateProduct(ProductDto input)
+        public Task<Core.Entity.Product> CreateProduct(ProductDto input)
         {
-            var product = await _productRepository.InsertAsync(new Core.Entity.Product
-            {
-                Name = input.Name,
-                Price = input.Price,
-                Description = input.Description
-            });
-
-            await _unitOfWork.SaveChangeAsync();
-            return product;
+            throw new System.NotImplementedException();
         }
     }
 }

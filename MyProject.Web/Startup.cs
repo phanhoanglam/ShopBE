@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -40,32 +41,41 @@ namespace MyProject.Web
                 builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(option =>
-                {
-                    option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                    };
-                });
-
-            // End
-
-            services.AddIdentity<AppUser, AppRole>(option =>
-            {
-                option.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<MyProjectAppContext>();
-
             services.AddDbContext<MyProjectAppContext>(cfg =>
             {
                 cfg.UseMySql(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("MyProject.Data"));
             });
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(option =>
+            //    {
+            //        option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidateLifetime = true,
+            //            ValidateIssuerSigningKey = true,
+            //            ValidIssuer = Configuration["Jwt:Issuer"],
+            //            ValidAudience = Configuration["Jwt:Issuer"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+            //        };
+            //    });
+
+            //// End
+
+            //services.AddIdentity<AppUser, AppRole>(option =>
+            //{
+            //    option.User.RequireUniqueEmail = true;
+            //}).AddEntityFrameworkStores<MyProjectAppContext>();
+
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<MyProjectAppContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<AppUser, MyProjectAppContext>();
+
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -128,9 +138,9 @@ namespace MyProject.Web
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+
+            app.UseIdentityServer();
 
             app.UseEndpoints(endpoints =>
             {
