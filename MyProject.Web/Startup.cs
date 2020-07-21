@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MyProject.Application.AutoMapper;
+using MyProject.Application.Services.Categories;
 using MyProject.Application.Services.Product;
 using MyProject.Application.Services.User;
 using MyProject.Application.Services.User.Dto;
@@ -35,11 +38,11 @@ namespace MyProject.Web
             services.AddControllers();
 
             // config Identity
-            services.AddCors(option =>
-            {
-                option.AddPolicy("CorsPolicy",
-                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
-            });
+            //services.AddCors(option =>
+            //{
+            //    option.AddPolicy("CorsPolicy",
+            //    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
+            //});
 
             services.AddDbContext<MyProjectAppContext>(cfg =>
             {
@@ -77,14 +80,14 @@ namespace MyProject.Web
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             // Repository
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Service
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -94,6 +97,8 @@ namespace MyProject.Web
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
             });
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGen(c =>
             {

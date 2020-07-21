@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyProject.Core.IRepository
@@ -9,7 +10,7 @@ namespace MyProject.Core.IRepository
 
         Task<T> GetAsync(K id);
 
-        IQueryable<T> GetAll();
+        IEnumerable<T> GetAll();
 
         T Insert(T entity);
 

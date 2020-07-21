@@ -6,14 +6,14 @@ namespace MyProject.Application.Services.Product
 {
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        //private readonly IProductRepository _productRepository;
+        //private readonly IUnitOfWork _unitOfWork;
 
-        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork)
-        {
-            _productRepository = productRepository;
-            _unitOfWork = unitOfWork;
-        }
+        //public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork)
+        //{
+        //    _productRepository = productRepository;
+        //    _unitOfWork = unitOfWork;
+        //}
 
         public Task<Core.Entity.Product> CreateProduct(ProductDto input)
         {

@@ -22,5 +22,10 @@ namespace MyProject.Data.Repository
         {
             await _dbContext.SaveChangesAsync();
         }
+
+        public void Dispose()
+        {
+            _dbContext.Dispose();
+        }
     }
 }

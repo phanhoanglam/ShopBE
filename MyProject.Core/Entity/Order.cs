@@ -19,10 +19,14 @@ namespace MyProject.Core.Entity
         public DateTime DateCreated { get; set; }
         public DateTime? DateCanceled { get; set; }
         public byte StatusId { get; set; }
+        [AllowNull]
+        public byte? DiscountId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual AppUser AppUser { get; set; }
         [ForeignKey("StatusId")]
         public virtual Status Status { get; set; }
+        [ForeignKey("DiscountId")]
+        public virtual DiscountCode DiscountCode { get; set; }
     }
 }

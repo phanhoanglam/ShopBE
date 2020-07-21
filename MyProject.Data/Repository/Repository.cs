@@ -1,5 +1,7 @@
-﻿using MyProject.Core.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using MyProject.Core.IRepository;
 using MyProject.Data.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,9 +33,9 @@ namespace MyProject.Data.Repository
             return entity;
         }
 
-        public IQueryable<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            var entities = _dbContext.Set<T>().AsQueryable();
+            var entities = _dbContext.Set<T>().AsEnumerable();
             return entities;
         }
 

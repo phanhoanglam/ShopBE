@@ -17,7 +17,6 @@ namespace MyProject.Web.Controllers
             _productService = productService;
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost("Create")]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto input)
         {

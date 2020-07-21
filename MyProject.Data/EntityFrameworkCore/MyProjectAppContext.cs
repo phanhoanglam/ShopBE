@@ -10,7 +10,6 @@ namespace MyProject.Data.EntityFrameworkCore
 {
     public class MyProjectAppContext : ApiAuthorizationDbContext<AppUser>
     {
-        public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
@@ -21,6 +20,8 @@ namespace MyProject.Data.EntityFrameworkCore
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<DiscountCode> DiscountCodes { get; set; }
+        public DbSet<Product> Products { get; set; }
+
 
         public MyProjectAppContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
