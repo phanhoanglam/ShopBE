@@ -111,7 +111,8 @@ namespace MyProject.Web
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new AutoMapperConfig());
+                mc.AddProfile(new ModelToModelDtoMapping());
+                mc.AddProfile(new ModelDtoToModelMapping());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
