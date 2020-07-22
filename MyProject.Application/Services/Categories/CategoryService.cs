@@ -13,27 +13,48 @@ namespace MyProject.Application.Services.Categories
     public class CategoryService : ICategoryService
     {
         private readonly IRepository<Category, long> _repository;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Category, long> repository, Mapper mapper)
+        public CategoryService(IRepository<Category, long> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<List<CategoryDto>> GetAll()
+        public List<CategoryDto> GetAll()
         {
             var categories = _repository.GetAll().Where(c => c.ParentId == null).ToList();
-            var cateoriesDto = _mapper.Map<List<CategoryDto>>(categories);
-            GetChildren(cateoriesDto);
-            return cateoriesDto;
+            var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
+
+            foreach (var item in categoriesDto)
+            {
+                GetChildren(item);
+            }
+
+            return categoriesDto;
         }
 
-        private void GetChildren(List<CategoryDto> list)
+        private void GetChildren(CategoryDto item)
         {
-            list.Add(new CategoryDto
+            var categoriesChild = _repository.GetAll().Where(c => c.ParentId == item.Id).ToList();
+
+            var categoriesChildDto = _mapper.Map<List<CategoryDto>>(categoriesChild);
+
+            if (categoriesChildDto != null)
             {
-                Id = 1,
-            });
+                item.CategoryDtos = categoriesChildDto;
+
+                foreach (var jtem in item.CategoryDtos)
+                {
+                    GetChildren(jtem);
+                }
+            }
+        }
+
+        public List<CategoryDto> GetCategoryShowHome()
+        {
+            var categories = _repository.GetAll().Where(c => c.ShowHome == true).ToList();
+            var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
+            return categoriesDto;
         }
     }
 }

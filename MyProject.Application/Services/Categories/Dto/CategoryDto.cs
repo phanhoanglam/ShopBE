@@ -9,11 +9,12 @@ namespace MyProject.Application.Services.Categories.Dto
     {
         public string Name { get; set; }
         public string Metatitle { get; set; }
-        public long ParentId { get; set; }
+        public long? ParentId { get; set; }
         public byte DisplayOrder { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public bool Status { get; set; }
+        public string PathImage { get; set; }
 
         public List<CategoryDto> CategoryDtos { get; set; }
     }

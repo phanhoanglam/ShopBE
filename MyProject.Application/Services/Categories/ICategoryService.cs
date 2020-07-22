@@ -8,6 +8,7 @@ namespace MyProject.Application.Services.Categories
 {
     public interface ICategoryService
     {
-        Task<List<CategoryDto>> GetAll();
+        List<CategoryDto> GetAll();
+        List<CategoryDto> GetCategoryShowHome();
     }
 }

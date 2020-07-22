@@ -13,18 +13,23 @@ using Microsoft.OpenApi.Models;
 using MyProject.Application.AutoMapper;
 using MyProject.Application.Services.Categories;
 using MyProject.Application.Services.Product;
+using MyProject.Application.Services.Slides;
 using MyProject.Application.Services.User;
 using MyProject.Application.Services.User.Dto;
 using MyProject.Core.Entity;
 using MyProject.Core.IRepository;
 using MyProject.Data.EntityFrameworkCore;
 using MyProject.Data.Repository;
+using System;
+using System.Linq;
 using System.Text;
 
 namespace MyProject.Web
 {
     public class Startup
     {
+        private const string _defaultCorsPolicyName = "localhost";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -88,6 +93,7 @@ namespace MyProject.Web
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISlideService, SlideService>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -98,7 +104,18 @@ namespace MyProject.Web
                 options.Password.RequiredLength = 6;
             });
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddCors(c=>c.AddPolicy("TCAPolicy", builder=>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperConfig());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddSwaggerGen(c =>
             {
@@ -146,6 +163,8 @@ namespace MyProject.Web
             app.UseAuthentication();
 
             app.UseIdentityServer();
+
+            app.UseCors("TCAPolicy");
 
             app.UseEndpoints(endpoints =>
             {

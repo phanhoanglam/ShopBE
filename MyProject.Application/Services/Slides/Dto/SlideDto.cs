@@ -1,13 +1,11 @@
-﻿using MyProject.Core.Abstract;
+﻿using MyProject.Application.Abstact;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace MyProject.Core.Entity
+namespace MyProject.Application.Services.Slides.Dto
 {
-    [Table("SHOP.Slides")]
-    public class Slide : Entity<byte>
+    public class SlideDto : EntityDto<byte>
     {
         public string Name { get; set; }
         public string Path { get; set; }

@@ -18,5 +18,7 @@ namespace MyProject.Core.Entity
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public bool Status { get; set; }
+        public string PathImage { get; set; }
+        public bool ShowHome { get; set; }
     }
 }
