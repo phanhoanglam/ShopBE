@@ -23,7 +23,5 @@ namespace MyProject.Web.Controllers
             var product = await _productService.CreateProduct(input);
             return Ok(product);
         }
-
-        public ActionResult<Lis>
     }
 }
