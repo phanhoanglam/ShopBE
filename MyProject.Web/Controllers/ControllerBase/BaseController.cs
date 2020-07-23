@@ -3,7 +3,7 @@
 namespace MyProject.Web.Controllers.ControllerBase
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class BaseController : Controller
     {
     }

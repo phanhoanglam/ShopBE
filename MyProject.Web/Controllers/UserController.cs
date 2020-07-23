@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MyProject.Application.Services.User;
 using MyProject.Application.Services.User.Dto;
+using MyProject.Application.Services.Users.Dto;
 using MyProject.Core.Entity;
 using MyProject.Web.Controllers.ControllerBase;
 using System;
@@ -41,7 +43,7 @@ namespace MyProject.Web.Controllers
             }
             else
             {
-                return BadRequest(result.Errors);
+                return NotFound(result.Errors);
             }
         }
 
@@ -56,7 +58,7 @@ namespace MyProject.Web.Controllers
         }
 
         [HttpPost("Authentica")]
-        public async Task<IActionResult> Authentica(AuthenticaDto input)
+        public async Task<ActionResult> Authentica(AuthenticaDto input)
         {
             var user = await _userManager.FindByEmailAsync(input.UserNameOrEmail);
             if (user != null)
@@ -68,10 +70,10 @@ namespace MyProject.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Login invalid !!!");
+                    return NotFound("Login invalid !!!");
                 }
             }
-            return BadRequest("Email does not exist !!!");
+            return NotFound("Email does not exist !!!");
         }
 
         private string GenerateJSONWebToken(AppUser input)

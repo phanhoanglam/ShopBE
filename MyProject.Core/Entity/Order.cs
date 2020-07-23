@@ -11,7 +11,7 @@ namespace MyProject.Core.Entity
     public class Order : Entity<long>
     {
         [AllowNull]
-        public string UserId { get; set; }
+        public Guid? UserId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public string CustomerMobile { get; set; }

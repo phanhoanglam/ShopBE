@@ -1,6 +1,4 @@
-﻿using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MyProject.Core.Entity;
@@ -8,7 +6,7 @@ using System;
 
 namespace MyProject.Data.EntityFrameworkCore
 {
-    public class MyProjectAppContext : ApiAuthorizationDbContext<AppUser>
+    public class MyProjectAppContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Color> Colors { get; set; }
@@ -22,8 +20,7 @@ namespace MyProject.Data.EntityFrameworkCore
         public DbSet<DiscountCode> DiscountCodes { get; set; }
         public DbSet<Product> Products { get; set; }
 
-
-        public MyProjectAppContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public MyProjectAppContext(DbContextOptions<MyProjectAppContext> options) : base(options)
         {
         }
     }

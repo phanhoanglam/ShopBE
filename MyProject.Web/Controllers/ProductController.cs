@@ -17,11 +17,13 @@ namespace MyProject.Web.Controllers
             _productService = productService;
         }
 
-        [HttpPost("Create")]
+        [HttpPost()]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto input)
         {
             var product = await _productService.CreateProduct(input);
             return Ok(product);
         }
+
+        public ActionResult<Lis>
     }
 }

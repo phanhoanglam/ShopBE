@@ -54,36 +54,36 @@ namespace MyProject.Web
                 cfg.UseMySql(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("MyProject.Data"));
             });
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(option =>
-            //    {
-            //        option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidateLifetime = true,
-            //            ValidateIssuerSigningKey = true,
-            //            ValidIssuer = Configuration["Jwt:Issuer"],
-            //            ValidAudience = Configuration["Jwt:Issuer"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-            //        };
-            //    });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
 
             //// End
 
-            //services.AddIdentity<AppUser, AppRole>(option =>
-            //{
-            //    option.User.RequireUniqueEmail = true;
-            //}).AddEntityFrameworkStores<MyProjectAppContext>();
+            services.AddIdentity<AppUser, AppRole>(option =>
+            {
+                option.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<MyProjectAppContext>();
 
-            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<MyProjectAppContext>();
+            //services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<MyProjectAppContext>();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<AppUser, MyProjectAppContext>();
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<AppUser, MyProjectAppContext>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
 
             // Repository
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
@@ -162,7 +162,7 @@ namespace MyProject.Web
 
             app.UseAuthentication();
 
-            app.UseIdentityServer();
+            app.UseAuthorization();
 
             app.UseCors("TCAPolicy");
 

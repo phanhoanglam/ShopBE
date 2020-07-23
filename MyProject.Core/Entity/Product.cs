@@ -18,6 +18,7 @@ namespace MyProject.Core.Entity
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public bool Status { get; set; }
+        public bool IsDisplaySlide { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }

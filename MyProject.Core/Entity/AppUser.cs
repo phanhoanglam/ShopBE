@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MyProject.Core.Entity
 {
     [Table("SHOP.AppUser")]
-    public class AppUser : IdentityUser
+    public class AppUser : IdentityUser<Guid>
     {
         public string Address { get; set; }
         public bool Gender { get; set; }

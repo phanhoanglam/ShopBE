@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyProject.Application.Services.Categories;
 using MyProject.Application.Services.Categories.Dto;
@@ -17,19 +18,25 @@ namespace MyProject.Web.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("GetAll")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet()]
         public ActionResult<List<CategoryDto>> GetAll()
         {
             var categories = _categoryService.GetAll();
             return Ok(categories);
         }
 
-        [HttpGet("GetCategoryShowHome")]
+        [HttpGet("{id}")]
+        public ActionResult<CategoryDto> Get(long id)
+        {
+            return null;
+        }
+
+        [HttpGet()]
         public ActionResult<List<CategoryDto>> GetCategoryShowHome()
         {
             var categories = _categoryService.GetCategoryShowHome();
             return Ok(categories);
         }
-
     }
 }
